@@ -12,5 +12,5 @@ urlpatterns = [
         url(r'^api/v1/users/', include('ibanmanager.users.urls_api', namespace='api-v1-users')),
         url(r'^api/v1/bank/', include('ibanmanager.bank.urls_api', namespace='api-v1-bank')),
 
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+] #+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

@@ -3,8 +3,8 @@
 from __future__ import unicode_literals, absolute_import
 
 from django.contrib.auth.models import AbstractUser
-from django.contrib.gis.db import models
-from django.core.urlresolvers import reverse, resolve
+from django.db import models
+from django.urls import reverse, resolve
 from django.utils.translation import ugettext_lazy as _
 from django.utils.encoding import python_2_unicode_compatible
 from django.conf import settings
@@ -69,7 +69,7 @@ class Token(rest_framework.authtoken.models.Token):
 
 
 class TokenResetPassword(BaseModel):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     token = models.CharField(max_length=40, db_index=True, unique=True)
 
 

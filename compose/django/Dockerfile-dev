@@ -4,24 +4,16 @@ ENV PYTHONUNBUFFERED 1
 
 ENV ROOTDIR /usr/local/
 
-ENV GEOS_VERSION 3.5.0
-ENV PROJ4_VERSION 4.9.2
-ENV GDAL_VERSION 2.1.0
-
 WORKDIR $ROOTDIR/
 
 ADD ./compose/django/compile.sh $ROOTDIR/src/
 ADD ./compose/django/install_extras.sh $ROOTDIR/src/
 
-ADD http://download.osgeo.org/geos/geos-${GEOS_VERSION}.tar.bz2 $ROOTDIR/src/
-ADD http://download.osgeo.org/proj/proj-${PROJ4_VERSION}.tar.gz $ROOTDIR/src/
-ADD http://download.osgeo.org/proj/proj-datumgrid-1.5.tar.gz $ROOTDIR/src/
-ADD http://download.osgeo.org/gdal/${GDAL_VERSION}/gdal-${GDAL_VERSION}.tar.gz $ROOTDIR/src/
 
+# Compilation
 RUN chmod 777 src/install_extras.sh
 RUN src/install_extras.sh
 
-# Compilation
 RUN chmod 777 src/compile.sh
 RUN src/compile.sh
 
@@ -29,9 +21,9 @@ RUN src/compile.sh
 COPY ./requirements /requirements
 RUN pip install -r /requirements/local.txt
 
-RUN groupadd -r thearomatrace && useradd -r -g thearomatrace thearomatrace
+RUN groupadd -r ibanmanager && useradd -r -g ibanmanager ibanmanager
 COPY . /app
-RUN chown -R thearomatrace /app
+RUN chown -R ibanmanager /app
 
 COPY ./compose/django/entrypoint.sh /entrypoint.sh
 RUN sed -i 's/\r//' /entrypoint.sh
