@@ -1,0 +1,18 @@
+{% load i18n %}{% autoescape off %}
+Ha recibido este correo electrónico debido a que se ha creado una cuenta en el sistema {{ site_name }}.
+
+Por favor, active su cuenta en el siguiente enlace:
+{% block reset_link %}
+http://{{ domain }}/{{ url }}
+{% endblock %}
+
+Si desea cambiar su contraseña podrá hacerlo en:
+http://{{ domain }}/#/help/password
+
+Usuario: {{username}}
+Password: {{password}}
+
+¡Gracias por usar nuestro sitio!
+
+
+{% endautoescape %}

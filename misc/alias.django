@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+MEX_PROJECT_FOLDER=$DIR'/../insafe'
+
+alias senv='export COMPOSE_FILE=$MEX_PROJECT_FOLDER/../dev.yml'
+alias svir='dev;'
+
+alias dev='cd $MEX_PROJECT_FOLDER;eval $(docker-machine env)'
+
+alias dbuild='bdir=`pwd`;cd $MEX_PROJECT_FOLDER;senv;docker-compose build;cd $bdir'
+alias runs='bdir=`pwd`;cd $MEX_PROJECT_FOLDER;senv;docker-compose up;cd $bdir'
+alias tlogs='bdir=`pwd`;cd $MEX_PROJECT_FOLDER;senv;docker-compose logs -f;cd $bdir'
+
+alias migrate='bdir=`pwd`;cd $MEX_PROJECT_FOLDER;senv;docker-compose run --rm django python manage.py makemigrations;docker-compose run --rm django python manage.py migrate;cd $bdir'
+
+alias dshell='bdir=`pwd`;cd $MEX_PROJECT_FOLDER;senv;docker-compose run --rm django python manage.py shell;cd $bdir'
+
+alias updateenv='bdir=`pwd`;dev;source ../../../.INSAFE_ENV/bin/activate;pip install -r ../requirements/local.txt;deactivate;cd $bdir'
+alias maketextes='bdir=`pwd`;cd $MEX_PROJECT_FOLDER;docker-compose run --rm django python manage.py makemessages -l es;cd $bdir'
+alias compiletext='bdir=`pwd`;cd $MEX_PROJECT_FOLDER;docker-compose run --rm django python manage.py compilemessages;cd $bdir'
+alias condb='docker run -it --link postgres:postgres --net=insafe_default --rm postgres sh -c "exec psql -h postgres -p 5432 -U postgres -d insafe"'
+alias dumpdb='docker run -it --link postgres:postgres -v ~/:/hostdir/ --net=insafe_default --rm postgres sh -c "pg_dump -U postgres -h postgres -a --inserts --column-inserts insafe > hostdir/db_dump.sql"'
+alias cmachine='docker-machine ssh'
+
