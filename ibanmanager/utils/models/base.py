@@ -1,7 +1,12 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
+
+from ibanmanager.utils.models.fields import FirstUserField
+
 import uuid
+
+
 
 class BaseModel(models.Model):
 
@@ -9,6 +14,7 @@ class BaseModel(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
+    created_by = FirstUserField(blank=True, null=True, on_delete=models.SET_NULL)
 
     class Meta:
         abstract = True

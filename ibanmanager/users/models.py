@@ -7,8 +7,8 @@ from django.db import models
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
-from ibanmanager.utils.models.base import BaseModel
 from ibanmanager.utils.enum import DumbEnum
+from ibanmanager.utils.models.fields import FirstUserField
 
 import uuid
 
@@ -21,6 +21,8 @@ UserType = DumbEnum(
 class User(AbstractUser):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=True)
+    type = models.CharField(max_length=20, choices=UserType, default=UserType.INDIVIDUAL)
+    created_by = FirstUserField(blank=True, null=True, on_delete=models.SET_NULL)
 
     AbstractUser.REQUIRED_FIELDS += ('type',)
 

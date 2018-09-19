@@ -17,3 +17,4 @@ class AccountSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = bank_models.Account
+        fields = '__all__'

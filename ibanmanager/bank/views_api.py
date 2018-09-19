@@ -4,29 +4,19 @@ import django_filters
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 from rest_framework.viewsets import ModelViewSet
-from rest_framework import serializers as rf_serializers
-
 
 from ibanmanager.bank import models as bank_models
 from ibanmanager.bank import serializers as bank_serializers
 
 class AccountFilter(django_filters.FilterSet):
 
-    from_date = django_filters.IsoDateTimeFilter(name="created_at", lookup_expr='gte')
-    to_date = django_filters.IsoDateTimeFilter(name="created_at", lookup_expr='lte')
-
-
-    def get_name(self, name, value):
-        qs = self.filter(name__unaccent__icontains=value).order_by(name) # .order_by(Length(name).asc())
-        return qs
-
-    name = django_filters.CharFilter(method=get_name)
+    from_date = django_filters.IsoDateTimeFilter(field_name="created_at", lookup_expr='gte')
+    to_date = django_filters.IsoDateTimeFilter(field_name="created_at", lookup_expr='lte')
 
 
     class Meta:
         model = bank_models.Account
         fields = '__all__'
-        exclude = ('location',)
 
 
 
