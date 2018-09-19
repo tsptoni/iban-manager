@@ -1,6 +1,6 @@
 {
-  "name": "checking_img",
-  "version": "0.1.0",
+  "name": "ibanmanager",
+  "version": "0.0.2",
   "private": true,
   "dependencies": {
     "gapi-client": "0.0.3",
