@@ -32,9 +32,7 @@ DJANGO_APPS = (
 )
 
 THIRD_PARTY_APPS = (
-    'crispy_forms',  # Form layouts
     'rest_framework',
-
     'djoser',
     'corsheaders',
 )
@@ -101,8 +99,8 @@ MANAGERS = ADMINS
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
 DATABASES = {
     'default': {
-        # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        # 'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'ibanmanager',
         'USER': 'ibanmanager',
         'PASSWORD': 'ibanmanager',
@@ -191,7 +189,7 @@ REST_FRAMEWORK = {
         # 'ibanmanager.utils.rest.authentication.ExpiringTokenAuthentication',
     ),
     'DEFAULT_FILTER_BACKENDS': (
-        'rest_framework.filters.DjangoFilterBackend',
+        'django_filters.rest_framework.DjangoFilterBackend',
     ),
     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
     'PAGE_SIZE': 50,

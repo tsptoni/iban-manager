@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from django.contrib.gis.db import models
+from django.db import models
 import uuid
 
 class BaseModel(models.Model):

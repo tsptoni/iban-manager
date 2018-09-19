@@ -19,7 +19,6 @@ RUN src/compile.sh
 
 # Requirements have to be pulled and installed here, otherwise caching won't work
 COPY ./requirements /requirements
-
 RUN pip install -r /requirements/production.txt
 
 RUN groupadd -r django && useradd -r -g django django
@@ -35,6 +34,7 @@ RUN chmod +x /gunicorn.sh && chown django /gunicorn.sh
 
 WORKDIR /app
 
-RUN export DJANGO_SETTINGS_MODULE='config.settings.production';python manage.py compilemessages
+RUN export DJANGO_SETTINGS_MODULE='config.settings.production'
+RUN python manage.py compilemessages
 
 ENTRYPOINT ["/entrypoint.sh"]
