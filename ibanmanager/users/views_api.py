@@ -69,7 +69,7 @@ class UserViewSet(rf_mixins.RetrieveModelMixin,
     filter_fields = ('type', 'is_superuser')
 
     queryset = user_models.User.objects.all()
-    permission_classes = (UserCustomPermission,)
+    # permission_classes = (UserCustomPermission,)
 
     def get_queryset(self):
         result = user_models.User.objects.all()

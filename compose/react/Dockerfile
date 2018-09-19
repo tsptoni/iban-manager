@@ -1,5 +1,5 @@
 # base image
-FROM node:9.6.1
+FROM node:8.9.1
 
 # set working directory
 RUN mkdir /usr/src/app
@@ -10,8 +10,11 @@ ENV PATH /usr/src/app/node_modules/.bin:$PATH
 
 # install and cache app dependencies
 COPY react/ibanmanager/package.json /usr/src/app/package.json
-RUN npm install
-RUN npm install react-scripts@1.1.1 -g
+#RUN npm uninstall npm -g
+#RUN npm install npm@5.5.1
+#RUN npm install
+
+RUN yarn
 
 # start app
-CMD ["npm", "start"]
+CMD ["yarn", "start"]
