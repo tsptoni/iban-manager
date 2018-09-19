@@ -33,7 +33,6 @@ DJANGO_APPS = (
 
 THIRD_PARTY_APPS = (
     'rest_framework',
-
     'djoser',
     'corsheaders',
 )
@@ -190,7 +189,7 @@ REST_FRAMEWORK = {
         # 'ibanmanager.utils.rest.authentication.ExpiringTokenAuthentication',
     ),
     'DEFAULT_FILTER_BACKENDS': (
-        'rest_framework.filters.DjangoFilterBackend',
+        'django_filters.rest_framework.DjangoFilterBackend',
     ),
     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
     'PAGE_SIZE': 50,
