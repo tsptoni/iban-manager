@@ -15,7 +15,7 @@ from ibanmanager.utils.models.base import BaseModel
 
 class Account(BaseModel):
 
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL)
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL, related_name='accounts')
     iban = models.CharField(max_length=45, validators=[iban.validate])
 
     def __str__(self):
