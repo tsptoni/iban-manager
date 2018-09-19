@@ -11,6 +11,7 @@ urlpatterns = [
         path('admin/',  admin.site.urls),
         path('api/v1/users/', include('ibanmanager.users.urls_api')),
         path('api/v1/bank/', include('ibanmanager.bank.urls_api')),
+        path('auth/', include('rest_framework_social_oauth2.urls')),
 ]
 
 
