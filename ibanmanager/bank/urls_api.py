@@ -2,14 +2,15 @@
 
 from __future__ import absolute_import, unicode_literals
 
-from django.conf.urls import url, include
+from django.urls import path, include
 from rest_framework import routers
 
 from . import views_api
 
 router = routers.DefaultRouter()
+router.register(r'account', views_api.AccountViewSet)
 
 urlpatterns = [
-    url(r'', include(router.urls)),
+    path('', include(router.urls)),
 ]
 
