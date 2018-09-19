@@ -32,3 +32,17 @@ services:
       - "8000:8000"
     links:
       - ibanmanager_postgres
+
+  ibanmanager_react:
+    build:
+      context: .
+      dockerfile: ./compose/react/Dockerfile
+    depends_on:
+      - ibanmanager_django
+    volumes:
+      - './react/ibanmanager:/usr/src/app'
+      - '/usr/src/app/node_modules' #Override the host node_modules to empty folder
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=development
