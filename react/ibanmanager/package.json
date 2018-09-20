@@ -1,6 +1,6 @@
 {
   "name": "ibanmanager",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "private": true,
   "dependencies": {
     "gapi-client": "0.0.3",
