@@ -22,9 +22,13 @@ class User(AbstractUser):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=True)
     type = models.CharField(max_length=20, choices=UserType, default=UserType.INDIVIDUAL)
+
+    first_name = models.CharField(max_length=45)
+    last_name = models.CharField(max_length=90)
+
     created_by = FirstUserField(blank=True, null=True, on_delete=models.SET_NULL)
 
-    AbstractUser.REQUIRED_FIELDS += ('type',)
+    AbstractUser.REQUIRED_FIELDS += ('type', 'first_name', 'last_name')
 
     def __str__(self):
         return self.username
