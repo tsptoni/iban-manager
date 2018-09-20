@@ -13,7 +13,7 @@ from ibanmanager.utils.models.fields import FirstUserField
 import uuid
 
 
-UserType = DumbEnum(
+USER_TYPE = DumbEnum(
         ("INDIVIDUAL", _("Individual")),
         ("ADMIN", _("Admin"))
     )
@@ -21,10 +21,13 @@ UserType = DumbEnum(
 class User(AbstractUser):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=True)
-    type = models.CharField(max_length=20, choices=UserType, default=UserType.INDIVIDUAL)
+    type = models.CharField(max_length=20, choices=USER_TYPE, default=USER_TYPE.INDIVIDUAL)
+    first_name = models.CharField(max_length=45)
+    last_name = models.CharField(max_length=90)
+
     created_by = FirstUserField(blank=True, null=True, on_delete=models.SET_NULL)
 
-    AbstractUser.REQUIRED_FIELDS += ('type',)
+    AbstractUser.REQUIRED_FIELDS += ('type', 'first_name', 'last_name')
 
     def __str__(self):
         return self.username
@@ -41,7 +44,7 @@ class User(AbstractUser):
                                         is_staff=True,
                                         is_superuser=True,
                                         is_active=True,
-                                        type=UserType.ADMIN)
+                                        type=USER_TYPE.ADMIN)
 
 
         pwd = cls.objects.make_random_password() if password == None else password
