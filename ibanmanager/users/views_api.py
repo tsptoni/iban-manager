@@ -46,18 +46,13 @@ class UnregisterUserView(DestroyAPIView):
 class UserCustomPermission(permissions.IsAuthenticated):
     def has_permission(self, request, view):
         is_authenticated = super(UserCustomPermission, self).has_permission(request, view)
-
-        if not is_authenticated:
-            return False
-        else:
-            return request.user.type == user_models.UserType.ADMIN
+        return is_authenticated and request.user.type == user_models.UserType.ADMIN
 
     def has_object_permission(self, request, view, obj):
-        if request.user.type == user_models.UserType.ADMIN:
+        if request.method in permissions.SAFE_METHODS:
             return True
         else:
-            # return obj.id == request.user.id #Other users can only
-            return False
+            return obj.created_by.pk == request.user.pk
 
 
 class UserViewSet(rf_mixins.RetrieveModelMixin,
@@ -69,10 +64,10 @@ class UserViewSet(rf_mixins.RetrieveModelMixin,
     filter_fields = ('type', 'is_superuser')
 
     queryset = user_models.User.objects.all()
-    # permission_classes = (UserCustomPermission,)
+    permission_classes = (UserCustomPermission,)
 
     def get_queryset(self):
-        result = user_models.User.objects.all()
+        result = user_models.User.objects.filter(type=user_models.USER_TYPE.INDIVIDUAL)
 
         if self.request.query_params.get('is_superuser', None) != None:
             filter_is_superuser = self.request.query_params.get('is_superuser', 'false').lower() == 'true'
