@@ -1,8 +1,8 @@
 const url = "http://127.0.0.1:8000";
 
 const requestingUserData = () => ({ type: "SENDING_USER_DATA" });
-const postingUserData = resp => ({ type: "POSTING_USER_DATA", resp });
-const updatingUserData = resp => ({ type: "UPDATING_USER_DATA", resp });
+const postingUserData = () => ({ type: "POSTING_USER_DATA" });
+const updatingUserData = () => ({ type: "UPDATING_USER_DATA" });
 const receiveResponseListUser = resp => ({ type: "RECEIVE_RESPONSE_LIST_USER", resp });
 const receiveResponseUser = resp => ({ type: "RECEIVE_RESPONSE_USER", resp });
 const receiveErrorUser = err => ({ type: "RECEIVE_ERROR_USER", err });
@@ -90,14 +90,17 @@ function updateUser(uuid, formData) {
         method: "PATCH",
         headers: {
           Accept: "application/json",
+          "Content-Type": "application/json",
           Authorization: `Bearer ${token_conv}`
         },
-        data: formData
+        body: JSON.stringify(formData)
       });
       if (!response.ok) {
         throw new Error("Authorized Request Failed");
       }
       let responseJson = await response.json();
+        console.log('UPDATE USER');
+        console.log(responseJson);
       return dispatch(receiveResponseUser(responseJson));
     } catch (err) {
       dispatch(receiveErrorUser(err));

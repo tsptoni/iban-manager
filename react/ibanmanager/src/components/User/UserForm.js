@@ -65,14 +65,14 @@ class UserForm extends Component {
   e.preventDefault();
 
   let formData = {
-   formFirstName: this.state.first_name,
-   formLastName: this.state.last_name,
+   first_name: this.state.first_name,
+   last_name: this.state.last_name,
    formEmail: this.state.email,
    formSubject: this.state.subject,
    formMessage: this.state.message
   };
 
-  if (formData.formFirstName.length < 1 || formData.formLastName.length < 1 || formData.formEmail.length < 1 || formData.formSubject.length < 1 || formData.formMessage.length < 1) {
+  if (formData.first_name.length < 1 || formData.last_name.length < 1 || formData.formEmail.length < 1 || formData.formSubject.length < 1 || formData.formMessage.length < 1) {
    return false
   }
 
@@ -104,14 +104,14 @@ class UserForm extends Component {
     <h1>Say Hi!</h1>
 
     <fieldset className='form-group'>
-     <ReactFormLabel htmlFor='formFirstName' title='First Name:' />
+     <ReactFormLabel htmlFor='first_name' title='First Name:' />
 
-     <input id='formFirstName' className='form-input' name='first_name' type='text' required onChange={this.handleChange} value={this.state.first_name} />
+     <input id='first_name' className='form-input' name='first_name' type='text' required onChange={this.handleChange} value={this.state.first_name} />
     </fieldset>
    <fieldset className='form-group'>
-     <ReactFormLabel htmlFor='formLastName' title='Last Name:' />
+     <ReactFormLabel htmlFor='last_name' title='Last Name:' />
 
-     <input id='formLaneName' className='form-input' name='last_name' type='text' required onChange={this.handleChange} value={this.state.last_name} />
+     <input id='last_name' className='form-input' name='last_name' type='text' required onChange={this.handleChange} value={this.state.last_name} />
     </fieldset>
 
     <fieldset className='form-group'>
