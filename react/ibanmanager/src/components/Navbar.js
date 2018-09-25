@@ -35,6 +35,11 @@ function Navbar(props) {
           <NavLink to="/users/" exact className="nav-link">
             Users
           </NavLink>
+        </li>,
+        <li className="nav-item" key="user">
+          <NavLink to="/user/" exact className="nav-link">
+            New User
+          </NavLink>
         </li>
       ];
     }

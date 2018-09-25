@@ -9,9 +9,10 @@ const checkAuth = () => {
   return true;
 };
 
-//If there is a google/github token in localStorage let them access /secret
-const PrivateRoute = ({ component: Component }, ...rest) => (
+//If there is a google token in localStorage let them access /secret pages
+const PrivateRoute = ({ component: Component, path: path }, ...rest) => (
   <Route
+      path={path}
     {...rest}
     render={props => {
       return checkAuth() ? (
