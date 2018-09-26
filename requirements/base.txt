@@ -36,6 +36,7 @@ python-stdnum==1.9
 
 django-cors-headers==2.4.0
 
+django-auditlog==0.4.5
 
 
 pyopenssl==18.0.0

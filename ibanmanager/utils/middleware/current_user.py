@@ -2,6 +2,7 @@ from django.db.models import signals
 from django.utils.functional import curry
 from django.utils.decorators import decorator_from_middleware
 from django.utils.deprecation import MiddlewareMixin
+from oauth2_provider.models import AccessToken
 
 from ibanmanager.utils.models.fields import FirstRegistry, LastRegistry
 

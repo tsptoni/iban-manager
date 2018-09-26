@@ -38,6 +38,8 @@ THIRD_PARTY_APPS = (
     'rest_framework',
     'rest_framework_social_oauth2',
 
+    'auditlog',
+
     # 'djoser',
     'corsheaders',
 )
@@ -63,6 +65,8 @@ MIDDLEWARE = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'ibanmanager.utils.middleware.authentication_jwt.AuthenticationMiddlewareJWT',
+    'auditlog.middleware.AuditlogMiddleware',
     'ibanmanager.utils.middleware.current_user.FirstUserMiddleware',
     'ibanmanager.utils.middleware.current_user.LastUserMiddleware',
     'querycount.middleware.QueryCountMiddleware',
