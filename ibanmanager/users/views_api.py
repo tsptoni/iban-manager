@@ -12,7 +12,6 @@ class UserCustomPermission(permissions.IsAuthenticated):
         return is_authenticated and request.user.type == user_models.USER_TYPE.ADMIN
 
     def has_object_permission(self, request, view, obj):
-        print(request.data)
         if request.method in permissions.SAFE_METHODS:
             return True
         else:
