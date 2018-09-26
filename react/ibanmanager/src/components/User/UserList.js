@@ -6,6 +6,9 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import {
+  Redirect
+} from 'react-router-dom';
 
 const styles = theme => ({
   root: {
@@ -21,7 +24,14 @@ const styles = theme => ({
 class UserList extends Component {
   componentDidMount() {
     this.props.requestUsers();
+
   }
+
+    goUserForm = property => event => {
+        console.log(property);
+        this.props.history.push(`/user/${property}`);
+  };
+
   render() {
     return (
         <div>
@@ -36,9 +46,9 @@ class UserList extends Component {
               </TableRow>
             </TableHead>
             <TableBody>
-              {this.props.users.userData.map((user, index) => {
+              {this.props.users.userListData.map((user, index) => {
                 return (
-                  <TableRow key={index}>
+                  <TableRow key={index} onClick={this.goUserForm(user.id)}>
                     <TableCell component="th" scope="row">
                       {user.first_name}
                     </TableCell>

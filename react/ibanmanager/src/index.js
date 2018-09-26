@@ -10,6 +10,7 @@ import { Route, Switch } from "react-router-dom";
 import Home from "./containers/HomeContainer";
 import Navbar from "./containers/NavbarContainer";
 import UserList from "./containers/User/UserListContainer";
+import UserForm from "./containers/User/UserFormContainer";
 import { PrivateRoute } from "./customRoutes/ProtectedRoutes";
 import rootReducer from "./reducers";
 import auth_tokens_mw from "./customMiddleware/auth_tokens_mw";
@@ -45,6 +46,7 @@ ReactDOM.render(
         <Switch>
           <Route exact path="/" component={Home} />
           <PrivateRoute exact path="/users" component={UserList} />
+          <PrivateRoute path="/user/:uuid" component={UserForm} />
         </Switch>
       </div>
     </ConnectedRouter>
