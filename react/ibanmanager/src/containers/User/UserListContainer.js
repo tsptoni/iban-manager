@@ -1,4 +1,4 @@
-import { requestUsers } from "../../actions/userActions";
+import { requestUsers, deleteUser } from "../../actions/userActions";
 import UserList from "../../components/User/UserList";
 
 import { connect } from "react-redux";
@@ -11,7 +11,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    requestUsers: () => dispatch(requestUsers())
+    requestUsers: () => dispatch(requestUsers()),
+    deleteUser: (uuid) => dispatch(deleteUser(uuid)),
   };
 }
 

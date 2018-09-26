@@ -76,7 +76,12 @@ class UserForm extends Component {
    return false
   }
 
-     this.props.updateUser(this.props.match.params.uuid, formData);
+    if (this.props.match.params.uuid) {
+        this.props.updateUser(this.props.match.params.uuid, formData);
+    } else {
+        this.props.postUser(formData);
+    }
+
 
 
   this.setState({

@@ -16,6 +16,8 @@ function userReducer(state, action) {
 			return { ...state, err: null, isFetching: true };
 		case "UPDATING_USER_DATA":
 			return { ...state, err: null, isFetching: true };
+		case "DELETING_USER_DATA":
+			return { ...state, err: null, isFetching: true };
 		case "RECEIVE_RESPONSE_LIST_USER":
 			return { ...state, userListData: action.resp, isFetching: false };
 		case "RECEIVE_RESPONSE_USER":
