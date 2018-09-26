@@ -5,7 +5,7 @@ const postingUserData = () => ({ type: "POSTING_USER_DATA" });
 const updatingUserData = () => ({ type: "UPDATING_USER_DATA" });
 const deletingUser = () => ({ type: "DELETING_USER_DATA" });
 const receiveResponseListUser = resp => ({ type: "RECEIVE_RESPONSE_LIST_USER", resp });
-const receiveResponseUser = resp => ({ type: "RECEIVE_RESPONSE_USER", resp });
+const receiveResponseUser = (resp, created) => ({ type: "RECEIVE_RESPONSE_USER", resp, created });
 const receiveErrorUser = err => ({ type: "RECEIVE_ERROR_USER", err });
 
 function requestUsers() {
@@ -58,27 +58,20 @@ function requestUser(uuid) {
 }
 
 function deleteUser(uuid) {
-  return async function(dispatch) {
-    dispatch(deletingUser());
     try {
       let token_conv =
-        (await localStorage.getItem("goog_access_token_conv"));
-      let response = await fetch(`${url}/api/v1/users/user/${uuid}/`, {
+        ( localStorage.getItem("goog_access_token_conv"));
+      let response = fetch(`${url}/api/v1/users/user/${uuid}/`, {
         method: "DELETE",
         headers: {
           Accept: "application/json",
           Authorization: `Bearer ${token_conv}`
         }
       });
-      if (!response.ok) {
-        throw new Error("Authorized Request Failed");
-      }
-      let responseJson = {}
-      return dispatch(receiveResponseUser(responseJson));
+      return response;
     } catch (err) {
-      dispatch(receiveErrorUser(err));
+        return err;
     }
-  };
 }
 
 function postUser(formData) {
@@ -100,7 +93,7 @@ function postUser(formData) {
         throw new Error("Authorized Request Failed");
       }
       let responseJson = await response.json();
-      return dispatch(receiveResponseUser(responseJson));
+      return dispatch(receiveResponseUser(responseJson, true));
     } catch (err) {
       dispatch(receiveErrorUser(err));
     }

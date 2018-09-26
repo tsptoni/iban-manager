@@ -2,7 +2,8 @@ const initialState = {
 	userListData: [],
 	currentUser: {},
 	err: null,
-	isFetching: true
+	isFetching: true,
+    created: false
 };
 
 function userReducer(state, action) {
@@ -21,7 +22,7 @@ function userReducer(state, action) {
 		case "RECEIVE_RESPONSE_LIST_USER":
 			return { ...state, userListData: action.resp, isFetching: false };
 		case "RECEIVE_RESPONSE_USER":
-			return { ...state, currentUser: action.resp, isFetching: false };
+			return { ...state, currentUser: action.resp, isFetching: false, created: action.created };
 		case "RECEIVE_ERROR_USER":
 			return { ...state, err: action.err, isFetching: false };
 		default:

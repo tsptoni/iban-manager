@@ -28,7 +28,6 @@ class UserViewSet(ModelViewSet):
 
     def get_queryset(self):
         result = user_models.User.objects.filter(type=user_models.USER_TYPE.INDIVIDUAL)
-
         return user_serializers.UserSerializer.setup_eager_loading(result)
 
 

@@ -25,6 +25,8 @@ class User(AbstractUser):
     first_name = models.CharField(max_length=45)
     last_name = models.CharField(max_length=90)
 
+    created_at = models.DateTimeField(auto_now_add=True)
+    modified_at = models.DateTimeField(auto_now=True)
     created_by = FirstUserField(blank=True, null=True, on_delete=models.SET_NULL)
 
     AbstractUser.REQUIRED_FIELDS += ('type', 'first_name', 'last_name')
@@ -52,3 +54,6 @@ class User(AbstractUser):
         new_user.save()
 
         return (new_user, pwd)
+
+    class Meta:
+        ordering = ('-modified_at',)

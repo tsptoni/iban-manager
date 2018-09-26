@@ -47,6 +47,7 @@ ReactDOM.render(
           <Route exact path="/" component={Home} />
           <PrivateRoute exact path="/users" component={UserList} />
           <PrivateRoute path="/user/:uuid" component={UserForm} />
+          <PrivateRoute path="/user" component={UserForm} />
         </Switch>
       </div>
     </ConnectedRouter>
