@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { requestUser, updateUser, postUser, deleteUser } from "../../actions/userActions";
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 
@@ -33,9 +34,7 @@ class UserForm extends Component {
       this.state = {
        first_name: '',
        last_name: '',
-       email: '',
-       subject: '',
-       message: ''
+       email: ''
       };
 
       this.handleChange = this.handleChange.bind(this);
@@ -43,22 +42,53 @@ class UserForm extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState(nextProps.users.currentUser);
+        if (this.props.match.params.uuid) {
+            this.setState(nextProps.users.currentUser);
+        }
+
+        console.log(nextProps);
+        if (nextProps.users.created) {
+            this.props.history.push(`/users/`);
+        }
     }
 
   componentDidMount() {
-        this.props.requestUser(this.props.match.params.uuid);
+      if (this.props.match.params.uuid) {
+          this.props.requestUser(this.props.match.params.uuid);
+      }
   }
 
 
 
  handleChange = (e) => {
   let newState = {};
-
   newState[e.target.name] = e.target.value;
-
   this.setState(newState)
  };
+
+
+    handleDeleteBtn = (e) => {
+        let response = deleteUser(this.props.match.params.uuid);
+        response.then( response => {
+            if (!response.ok) {
+                // throw new Error("Authorized Request Failed");
+                alert('Authorized Request Failed');
+            } else {
+                alert('Deleted');
+                this.props.history.push(`/users/`);
+            }
+            return response;
+        });
+    };
+
+
+    showDeleteButton() {
+        if (this.props.match.params.uuid) {
+            return [
+                <a className="btn btn-warning" onClick={this.handleDeleteBtn}>Delete</a>
+            ];
+        }
+    }
 
 
  handleSubmit = (e, message) => {
@@ -67,24 +97,26 @@ class UserForm extends Component {
   let formData = {
    first_name: this.state.first_name,
    last_name: this.state.last_name,
-   formEmail: this.state.email,
-   formSubject: this.state.subject,
-   formMessage: this.state.message
+   username: this.state.username,
+   email: this.state.email
   };
 
-  if (formData.first_name.length < 1 || formData.last_name.length < 1 || formData.formEmail.length < 1 || formData.formSubject.length < 1 || formData.formMessage.length < 1) {
+  if (formData.first_name.length < 1 || formData.last_name.length < 1 || formData.email.length < 1 || formData.username.length < 1) {
    return false
   }
 
-     this.props.updateUser(this.props.match.params.uuid, formData);
+    if (this.props.match.params.uuid) {
+        this.props.updateUser(this.props.match.params.uuid, formData);
+    } else {
+        this.props.postUser(formData);
+    }
 
 
   this.setState({
    firstName: '',
    lastName: '',
-   email: '',
-   subject: '',
-   message: ''
+   username: '',
+   email: ''
   })
  };
 
@@ -92,52 +124,35 @@ class UserForm extends Component {
     return (
         <div>
             <form className='react-form' onSubmit={this.handleSubmit}>
-       <Paper>
 
-           {this.props.users.currentUser.id}<br/>
-           {this.props.users.currentUser.first_name}<br/>
-           {this.props.users.currentUser.last_name}<br/>
-           {this.props.users.currentUser.email}<br/>
-           {this.props.users.currentUser.type}
+                <Paper>
 
+                    <fieldset className='form-group'>
+                     <ReactFormLabel htmlFor='first_name' title='First Name:' />
+                     <input id='first_name' className='form-input' name='first_name' type='text' required onChange={this.handleChange} value={this.state.first_name} />
+                    </fieldset>
 
-    <h1>Say Hi!</h1>
+                   <fieldset className='form-group'>
+                     <ReactFormLabel htmlFor='last_name' title='Last Name:' />
+                     <input id='last_name' className='form-input' name='last_name' type='text' required onChange={this.handleChange} value={this.state.last_name} />
+                    </fieldset>
 
-    <fieldset className='form-group'>
-     <ReactFormLabel htmlFor='first_name' title='First Name:' />
+                   <fieldset className='form-group'>
+                     <ReactFormLabel htmlFor='username' title='Username:' />
+                     <input id='username' className='form-input' name='username' type='text' required onChange={this.handleChange} value={this.state.username} />
+                    </fieldset>
 
-     <input id='first_name' className='form-input' name='first_name' type='text' required onChange={this.handleChange} value={this.state.first_name} />
-    </fieldset>
-   <fieldset className='form-group'>
-     <ReactFormLabel htmlFor='last_name' title='Last Name:' />
+                    <fieldset className='form-group'>
+                     <ReactFormLabel htmlFor='email' title='Email:' />
+                     <input id='email' className='form-input' name='email' type='email' required onChange={this.handleChange} value={this.state.email} />
+                    </fieldset>
 
-     <input id='last_name' className='form-input' name='last_name' type='text' required onChange={this.handleChange} value={this.state.last_name} />
-    </fieldset>
+                    <div className='form-group'>
+                     <input id='formButton' className='btn btn-success' type='submit' placeholder='Create' />
+                    {this.showDeleteButton()}
+                    </div>
 
-    <fieldset className='form-group'>
-     <ReactFormLabel htmlFor='formEmail' title='Email:' />
-
-     <input id='formEmail' className='form-input' name='email' type='email' required onChange={this.handleChange} value={this.state.email} />
-    </fieldset>
-
-    <fieldset className='form-group'>
-     <ReactFormLabel htmlFor='formSubject' title='Subject:'/>
-
-     <input id='formSubject' className='form-input' name='subject' type='text' required onChange={this.handleChange} value={this.state.subject} />
-    </fieldset>
-
-    <fieldset className='form-group'>
-     <ReactFormLabel htmlFor='formMessage' title='Message:' />
-
-     <textarea id='formMessage' className='form-textarea' name='message' required onChange={this.handleChange}></textarea>
-    </fieldset>
-
-    <div className='form-group'>
-     <input id='formButton' className='btn btn-success' type='submit' placeholder='Create' />
-    </div>
-
-
-        </Paper>
+                </Paper>
             </form>
         </div>
     );

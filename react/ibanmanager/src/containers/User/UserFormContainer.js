@@ -1,4 +1,4 @@
-import { requestUser, updateUser } from "../../actions/userActions";
+import { requestUser, updateUser, postUser, deleteUser } from "../../actions/userActions";
 import UserForm from "../../components/User/UserForm";
 
 import { connect } from "react-redux";
@@ -12,7 +12,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     requestUser: (uuid) => dispatch(requestUser(uuid)),
-    updateUser: (uuid, formData) => dispatch(updateUser(uuid, formData))
+    updateUser: (uuid, formData) => dispatch(updateUser(uuid, formData)),
+    postUser: (formData) => dispatch(postUser(formData))
   };
 }
 

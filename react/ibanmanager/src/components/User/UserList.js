@@ -27,8 +27,8 @@ class UserList extends Component {
 
   }
 
+
     goUserForm = property => event => {
-        console.log(property);
         this.props.history.push(`/user/${property}`);
   };
 
@@ -39,10 +39,12 @@ class UserList extends Component {
           <Table>
             <TableHead>
               <TableRow>
+                <TableCell>Username</TableCell>
                 <TableCell>First name</TableCell>
                 <TableCell>Last name</TableCell>
                 <TableCell>Email</TableCell>
                 <TableCell>IBAN accounts</TableCell>
+                <TableCell>Created by</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -50,13 +52,18 @@ class UserList extends Component {
                 return (
                   <TableRow key={index} onClick={this.goUserForm(user.id)}>
                     <TableCell component="th" scope="row">
-                      {user.first_name}
+                      {user.username}
                     </TableCell>
+                      <TableCell>{user.first_name}</TableCell>
                     <TableCell>{user.last_name}</TableCell>
                     <TableCell>{user.email}</TableCell>
                     <TableCell>{user.accounts.map(function(name, i){
                         return <div>{name.iban}<br/></div>;
                   })}</TableCell>
+                  <TableCell>
+                      {user.created_by}
+                  </TableCell>
+
                   </TableRow>
                 );
               })}
