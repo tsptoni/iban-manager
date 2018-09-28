@@ -1,4 +1,4 @@
-import { requestUser, updateUser, postUser, deleteUser } from "../../actions/userActions";
+import { requestUser, updateUser, postUser } from "../../actions/userActions";
 import UserForm from "../../components/User/UserForm";
 
 import { connect } from "react-redux";
