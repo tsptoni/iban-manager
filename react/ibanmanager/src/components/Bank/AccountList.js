@@ -51,11 +51,11 @@ class AccountList extends Component {
                     alert(response.statusText);
                 } else {
                     alert('Success');
-                    response = response.json();
                 }
-                return response;
+                let data = response.json();
+                return data;
             }).then( data => {
-            if (index == null) {
+            if (index === null && response.ok) {
                 let accounts = this.state.accounts;
                 accounts.push(data);
                 this.setState({
@@ -133,7 +133,7 @@ class AccountList extends Component {
                         Add new account
                     </TableCell>
                     <TableCell><input id='iban' className='form-input w-60' name='iban' type="text" onChange={(e) => this.handleChange(null, e.target.value)}></input></TableCell>
-                    <TableCell><button className="btn btn-success" onClick={() => this.handleSubmit()}>Save</button></TableCell>
+                    <TableCell><button className="btn btn-success" onClick={() => this.handleSubmit(null)}>Save</button></TableCell>
                     <TableCell></TableCell>
                 </TableRow>
             </TableBody>
