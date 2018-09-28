@@ -27,9 +27,6 @@ class AccountList extends Component {
     constructor(props) {
         super(props);
 
-        console.log('INICIANDO PROPS');
-        console.log(props);
-
         this.state = {
             user: '',
             accounts: [],
@@ -38,6 +35,7 @@ class AccountList extends Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
     }
 
   componentDidMount() {
@@ -57,14 +55,50 @@ class AccountList extends Component {
     handleSubmit = (index) => {
         let response = null;
         if (index != null) {
-            console.log(this.state.accounts[index]);
             let account = this.state.accounts[index];
-            response = updateAccount(account.id, {"iban": account.iban})
+            response = updateAccount(account.id, {"iban": account.iban});
         } else {
-            response = postAccount({"iban": this.state.newAccount, "owner": this.state.user})
+            response = postAccount({"iban": this.state.newAccount, "owner": this.state.user});
         }
 
+        response.then( response => {
+                if (!response.ok) {
+                    alert(response.statusText);
+                } else {
+                    alert('Success');
+                    response = response.json();
+                }
+                return response;
+            }).then( data => {
+            if (index == null) {
+                let accounts = this.state.accounts;
+                accounts.push(data);
+                this.setState({
+                    accounts,
+                });
+            }
+            });
+    };
 
+    handleDelete = (index) => {
+        let response = null;
+        if (index != null) {
+            let account = this.state.accounts[index];
+            response = deleteAccount(account.id)
+            response.then( response => {
+                if (!response.ok) {
+                    alert(response.statusText);
+                } else {
+                    alert('Deleted');
+                    let accounts = this.state.accounts;
+                    accounts = accounts.filter(acc => acc.id != account.id)
+                    this.setState({
+                        accounts,
+                    });
+                }
+                return response;
+            });
+        }
     };
 
     handleChange = (index, newValue) => {
@@ -93,6 +127,7 @@ class AccountList extends Component {
                 <TableCell>UUID</TableCell>
                 <TableCell>IBAN</TableCell>
                 <TableCell></TableCell>
+                <TableCell></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -104,6 +139,7 @@ class AccountList extends Component {
                     </TableCell>
                       <TableCell><input id={index} className='form-input w-60' type="text" onChange={(e) => this.handleChange(index, e.target.value)} defaultValue={account.iban}></input></TableCell>
                       <TableCell><button className="btn btn-success" onClick={() => this.handleSubmit(index)}>Change</button></TableCell>
+                      <TableCell><button className="btn btn-danger" onClick={() => this.handleDelete(index)}>Delete</button></TableCell>
                   </TableRow>
                 );
               })}
@@ -113,6 +149,7 @@ class AccountList extends Component {
                     </TableCell>
                     <TableCell><input id='iban' className='form-input w-60' name='iban' type="text" onChange={(e) => this.handleChange(null, e.target.value)}></input></TableCell>
                     <TableCell><button className="btn btn-success" onClick={() => this.handleSubmit()}>Save</button></TableCell>
+                    <TableCell></TableCell>
                 </TableRow>
             </TableBody>
           </Table>
