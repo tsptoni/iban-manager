@@ -10,7 +10,7 @@ const receiveErrorAccount = err => ({ type: "RECEIVE_ERROR_ACCOUNT", err });
 function deleteAccount(uuid) {
     try {
       let token_conv =
-        ( localStorage.getItem("goog_access_token_conv"));
+        (localStorage.getItem("goog_access_token_conv"));
       let response = fetch(`${url}/api/v1/bank/account/${uuid}/`, {
         method: "DELETE",
         headers: {
@@ -25,12 +25,10 @@ function deleteAccount(uuid) {
 }
 
 function postAccount(formData) {
-  return async function(dispatch) {
-    dispatch(postingAccountData());
     try {
       let token_conv =
-        (await localStorage.getItem("goog_access_token_conv"));
-      let response = await fetch(`${url}/api/v1/bank/account/`, {
+        (localStorage.getItem("goog_access_token_conv"));
+      let response =  fetch(`${url}/api/v1/bank/account/`, {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -39,24 +37,17 @@ function postAccount(formData) {
         },
         body: JSON.stringify(formData)
       });
-      if (!response.ok) {
-        throw new Error("Authorized Request Failed");
-      }
-      let responseJson = await response.json();
-      return dispatch(receiveResponseUserAccount(responseJson, true));
+      return response;
     } catch (err) {
-      dispatch(receiveErrorAccount(err));
+        return err;
     }
-  };
-}
+};
 
 function updateAccount(uuid, formData) {
-  return async function(dispatch) {
-    dispatch(updatingAccountData());
     try {
       let token_conv =
-        (await localStorage.getItem("goog_access_token_conv"));
-      let response = await fetch(`${url}/api/v1/bank/account/${uuid}/`, {
+        (localStorage.getItem("goog_access_token_conv"));
+      let response = fetch(`${url}/api/v1/bank/account/${uuid}/`, {
         method: "PATCH",
         headers: {
           Accept: "application/json",
@@ -65,15 +56,10 @@ function updateAccount(uuid, formData) {
         },
         body: JSON.stringify(formData)
       });
-      if (!response.ok) {
-        throw new Error("Authorized Request Failed");
-      }
-      let responseJson = await response.json();
-      return dispatch(receiveResponseUserAccount(responseJson));
+      return response;
     } catch (err) {
-      dispatch(receiveErrorAccount(err));
+      return err;
     }
   };
-}
 
 export { postAccount, updateAccount, deleteAccount };

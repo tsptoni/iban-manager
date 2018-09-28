@@ -6,6 +6,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import { postAccount, updateAccount, deleteAccount } from "../../actions/bankActions";
 import {
   Redirect
 } from 'react-router-dom';
@@ -30,10 +31,9 @@ class AccountList extends Component {
         console.log(props);
 
         this.state = {
-            // user: props.user,
-            // accounts: props.accounts
             user: '',
-            accounts: []
+            accounts: [],
+            newAccount: {}
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -52,19 +52,34 @@ class AccountList extends Component {
             }
             this.setState(state);
         }
-        console.log('RECEIVE PROPS');
-        console.log(nextProps);
     }
 
-    handleSubmit = (e, message) => {
-        e.preventDefault();
+    handleSubmit = (index) => {
+        let response = null;
+        if (index != null) {
+            console.log(this.state.accounts[index]);
+            let account = this.state.accounts[index];
+            response = updateAccount(account.id, {"iban": account.iban})
+        } else {
+            response = postAccount({"iban": this.state.newAccount, "owner": this.state.user})
+        }
+
+
     };
 
+    handleChange = (index, newValue) => {
 
-    handleChange = (e) => {
-        let newState = {};
-        newState[e.target.name] = e.target.value;
-        this.setState(newState)
+        if (index != null) {
+            const accounts = this.state.accounts;
+            accounts[index].iban = newValue;
+
+            this.setState({
+                accounts,
+            });
+        } else {
+            let newAccount = newValue;
+            this.setState({newAccount});
+        }
     };
 
 
@@ -77,6 +92,7 @@ class AccountList extends Component {
               <TableRow>
                 <TableCell>UUID</TableCell>
                 <TableCell>IBAN</TableCell>
+                <TableCell></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -86,11 +102,18 @@ class AccountList extends Component {
                     <TableCell component="th" scope="row">
                       {account.id}
                     </TableCell>
-                      <TableCell>{account.iban}</TableCell>
-
+                      <TableCell><input id={index} className='form-input w-60' type="text" onChange={(e) => this.handleChange(index, e.target.value)} defaultValue={account.iban}></input></TableCell>
+                      <TableCell><button className="btn btn-success" onClick={() => this.handleSubmit(index)}>Change</button></TableCell>
                   </TableRow>
                 );
               })}
+                <TableRow>
+                    <TableCell component="th" scope="row">
+                        Add new account
+                    </TableCell>
+                    <TableCell><input id='iban' className='form-input w-60' name='iban' type="text" onChange={(e) => this.handleChange(null, e.target.value)}></input></TableCell>
+                    <TableCell><button className="btn btn-success" onClick={() => this.handleSubmit()}>Save</button></TableCell>
+                </TableRow>
             </TableBody>
           </Table>
         </Paper>
