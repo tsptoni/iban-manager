@@ -116,6 +116,7 @@ function updateUser(uuid, formData) {
         body: JSON.stringify(formData)
       });
       if (!response.ok) {
+          alert(response.statusText);
         throw new Error("Authorized Request Failed");
       }
       let responseJson = await response.json();
