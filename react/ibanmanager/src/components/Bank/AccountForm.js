@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { requestUser, updateUser, postUser, deleteUser } from "../../actions/userActions";
-import AccountList from "../../components/Bank/AccountList";
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 
@@ -42,30 +41,30 @@ class UserForm extends Component {
       this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (this.props.match.params.uuid) {
-            this.setState(nextProps.users.currentUser);
-        }
+     componentWillReceiveProps(nextProps) {
+         if (this.props.match.params.uuid) {
+             this.setState(nextProps.users.currentUser);
+         }
 
-        console.log(nextProps);
-        if (nextProps.users.created) {
-            this.props.history.push(`/users/`);
-        }
-    }
+         console.log(nextProps);
+         if (nextProps.users.created) {
+             this.props.history.push(`/users/`);
+         }
+     }
 
-  componentDidMount() {
-      if (this.props.match.params.uuid) {
-          this.props.requestUser(this.props.match.params.uuid);
+      componentDidMount() {
+          if (this.props.match.params.uuid) {
+              this.props.requestUser(this.props.match.params.uuid);
+          }
       }
-  }
 
 
 
- handleChange = (e) => {
-  let newState = {};
-  newState[e.target.name] = e.target.value;
-  this.setState(newState)
- };
+     handleChange = (e) => {
+      let newState = {};
+      newState[e.target.name] = e.target.value;
+      this.setState(newState)
+     };
 
 
     handleDeleteBtn = (e) => {
@@ -87,14 +86,6 @@ class UserForm extends Component {
         if (this.props.match.params.uuid) {
             return [
                 <a className="btn btn-warning" onClick={this.handleDeleteBtn}>Delete</a>
-            ];
-        }
-    }
-
-    showAccounts() {
-        if (this.props.users.currentUser) {
-            return [
-                <AccountList user={this.props.users.currentUser.id} accounts={this.props.users.currentUser.accounts} />
             ];
         }
     }
@@ -163,9 +154,6 @@ class UserForm extends Component {
 
                 </Paper>
             </form>
-            <Paper>
-                {this.showAccounts()}
-            </Paper>
         </div>
     );
   }
