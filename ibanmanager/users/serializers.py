@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from django.contrib.auth import authenticate
-from django.utils.translation import ugettext_lazy as _
-
 from rest_framework import serializers
 from ibanmanager.users import models
 from ibanmanager.bank import serializers as bank_serializers
