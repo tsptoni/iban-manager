@@ -82,11 +82,11 @@ class UserForm extends Component {
     }
 
     showAccounts() {
-        if (this.props.users.currentUser) {
+        // if (this.props.users.currentUser) {
             return [
                 <AccountList user={this.props.users.currentUser.id} accounts={this.props.users.currentUser.accounts} history={this.props.history} />
             ];
-        }
+        // }
     }
 
 

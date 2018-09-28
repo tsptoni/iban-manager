@@ -22,6 +22,7 @@ function requestUsers() {
         }
       });
       if (!response.ok) {
+          alert(response.statusText);
         throw new Error("Authorized Request Failed");
       }
       let responseJson = await response.json();
@@ -47,6 +48,7 @@ function requestUser(uuid) {
         }
       });
       if (!response.ok) {
+          alert(response.statusText);
         throw new Error("Authorized Request Failed");
       }
       let responseJson = await response.json();
@@ -90,6 +92,7 @@ function postUser(formData) {
         body: JSON.stringify(formData)
       });
       if (!response.ok) {
+          alert(response.statusText);
         throw new Error("Authorized Request Failed");
       }
       let responseJson = await response.json();
