@@ -1,12 +1,5 @@
 const url = "http://127.0.0.1:8000";
 
-const postingAccountData = () => ({ type: "POSTING_ACCOUNT_DATA" });
-const updatingAccountData = () => ({ type: "UPDATING_ACCOUNT_DATA" });
-const deletingAccount = () => ({ type: "DELETING_ACCOUNT_DATA" });
-const receiveResponseListUserAccount = resp => ({ type: "RECEIVE_RESPONSE_LIST_ACCOUNT", resp });
-const receiveResponseUserAccount = (resp, created) => ({ type: "RECEIVE_RESPONSE_ACCOUNT", resp, created });
-const receiveErrorAccount = err => ({ type: "RECEIVE_ERROR_ACCOUNT", err });
-
 function deleteAccount(uuid) {
     try {
       let token_conv =
