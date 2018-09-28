@@ -7,16 +7,16 @@ from django.conf import settings
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
 
-from stdnum import iban
-
 from ibanmanager.utils.models.base import BaseModel
+from ibanmanager.utils.models.validators import validate_iban
 
+from stdnum import iban
 
 
 class Account(BaseModel):
 
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='accounts')
-    iban = models.CharField(max_length=45, validators=[iban.validate])
+    iban = models.CharField(max_length=45, validators=[validate_iban])
 
     def __str__(self):
         return self.iban
