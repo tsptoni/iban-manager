@@ -6,6 +6,18 @@ Operating System requirements
 * docker ce
 * docker-compose
 
+
+Libraries and Components used
+=============================
+
+* Django 2.1
+* Django REST Framework 3.8
+* Python 3.6
+* django-rest-framework-social-oauth2 for Google Auth
+* python-stdnum for values validations (In our case for IBAN accounts)
+* django-querycount Debug queries
+
+
 Installation
 ============
 
@@ -46,6 +58,15 @@ Tests
 To execute Django tests just type:
 
 `docker-compose -f test.yml up`
+
+**Note:**
+
+After the tests, PostgreSQL doesn't shutdown. This can cause malfunction with other docker projects if they use
+the same port.
+
+To avoid this, just execute:
+
+`docker-compose -f dev.yml stop`
 
 
 Usage
