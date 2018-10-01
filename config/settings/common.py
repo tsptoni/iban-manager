@@ -260,6 +260,8 @@ AUTH_USER_MODEL = 'users.User'
 LOGIN_REDIRECT_URL = 'users:redirect'
 LOGIN_URL = 'account_login'
 
+FIRST_ADMIN_USERS = env.list('FIRST_ADMIN_USERS', default=[])
+
 
 # Location of root django.contrib.admin URL, use {% url 'admin:index' %}
 ADMIN_URL = r'^admin/'
