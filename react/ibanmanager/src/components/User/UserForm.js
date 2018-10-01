@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { requestUser, updateUser, postUser, deleteUser } from "../../actions/userActions";
-import { withStyles } from '@material-ui/core/styles';
+import { deleteUser } from "../../actions/userActions";
+import AccountList from "../../components/Bank/AccountList";
 import Paper from '@material-ui/core/Paper';
 
 
@@ -17,15 +17,6 @@ class ReactFormLabel extends Component {
 }
 
 
-const styles = theme => ({
-  root: {
-    width: '100%',
-    marginTop: theme.spacing.unit * 3,
-    overflowX: 'auto',
-  },
-});
-
-
 class UserForm extends Component {
 
     constructor(props) {
@@ -34,6 +25,7 @@ class UserForm extends Component {
       this.state = {
        first_name: '',
        last_name: '',
+       username: '',
        email: ''
       };
 
@@ -42,11 +34,11 @@ class UserForm extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
+
         if (this.props.match.params.uuid) {
             this.setState(nextProps.users.currentUser);
         }
 
-        console.log(nextProps);
         if (nextProps.users.created) {
             this.props.history.push(`/users/`);
         }
@@ -71,8 +63,7 @@ class UserForm extends Component {
         let response = deleteUser(this.props.match.params.uuid);
         response.then( response => {
             if (!response.ok) {
-                // throw new Error("Authorized Request Failed");
-                alert('Authorized Request Failed');
+                alert(response.statusText);
             } else {
                 alert('Deleted');
                 this.props.history.push(`/users/`);
@@ -88,6 +79,14 @@ class UserForm extends Component {
                 <a className="btn btn-warning" onClick={this.handleDeleteBtn}>Delete</a>
             ];
         }
+    }
+
+    showAccounts() {
+        // if (this.props.users.currentUser) {
+            return [
+                <AccountList user={this.props.users.currentUser.id} accounts={this.props.users.currentUser.accounts} history={this.props.history} />
+            ];
+        // }
     }
 
 
@@ -113,8 +112,8 @@ class UserForm extends Component {
 
 
   this.setState({
-   firstName: '',
-   lastName: '',
+   first_name: '',
+   last_name: '',
    username: '',
    email: ''
   })
@@ -154,6 +153,9 @@ class UserForm extends Component {
 
                 </Paper>
             </form>
+            <Paper>
+                {this.showAccounts()}
+            </Paper>
         </div>
     );
   }
