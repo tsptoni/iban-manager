@@ -73,7 +73,11 @@ Usage
 =====
 
 1 Login with you Google Account using the top button "Login with Google".
+
 2 In the user list you will see only the ADMIN accounts.
+
 3 You can create new users in the tab "New User".
+
 4 To see and update an user, you can click the row of the user in "Users List".
+
     4.1 If you are the creator of the user, then you will be able to add new accounts and modify user details.
