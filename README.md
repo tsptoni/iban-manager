@@ -43,13 +43,17 @@ Move to the base directory (you should see the dev.yml file).
 
 This will take a while until all the dependencies are installed (Python requirements, React packages and OS binaries).
 
+Install Tables to PostgreSQL.
+
+* 2 `docker-compose -f dev.yml run --rm ibanmanager_django python manage.py migrate`
+
 Once done, start the project with:
 
-* 2 `docker-compose -f dev.yml up`
+* 3 `docker-compose -f dev.yml up`
 
-* 3 Open your browser and go to http://localhost:3000
+* 4 Open your browser and go to http://localhost:3000
 
-* 3.1 If you want to explore the Django Admin Panel, go to http://localhost:8000
+* 4.1 If you want to explore the Django Admin Panel, go to http://localhost:8000
 
 
 Tests
